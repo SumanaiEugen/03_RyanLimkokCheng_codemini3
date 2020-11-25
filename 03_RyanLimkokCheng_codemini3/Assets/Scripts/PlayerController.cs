@@ -1,12 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     public Animator PlayerAnim;
-    float Speed = 5f;
     public Rigidbody PlayerRb;
+    public GameObject RotatePlatform;
+
+    float KeyCollected = 0f;
+    float Speed = 5f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +50,24 @@ public class PlayerController : MonoBehaviour
         {
             PlayerAnim.SetBool("IsMoving", false);
         }
-    }
 
+        //falls off
+        if (transform.position.y < -5)
+        {
+            SceneManager.LoadScene("LoseScene");
+        }
+
+    }
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Key")
+        {
+            Destroy(other.gameObject);
+        }
+        
+        if(other.gameObject.tag == "Target")
+        {
+                SceneManager.LoadScene("WinScene");
+        }
+    }
 }

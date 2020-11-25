@@ -5,7 +5,7 @@ using UnityEngine;
 public class CrateController : MonoBehaviour
 {
     public Animator MovingPlatform;
-    public GameObject MovingPlat;
+    bool movingplattrig = false;
    
     // Start is called before the first frame update
     void Start()
@@ -16,13 +16,16 @@ public class CrateController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (movingplattrig == true)
+        {
+            MovingPlatform.SetTrigger("MovingTrig");
+        }
     }
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Player")
         {
-            MovingPlatform.SetTrigger("MovingTrig");
+            movingplattrig = true;
         }
     }
 }
